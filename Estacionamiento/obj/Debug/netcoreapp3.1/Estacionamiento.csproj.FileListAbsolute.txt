@@ -36,6 +36,3 @@ C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\De
 C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Estacionamiento.pdb
 C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Estacionamiento.genruntimeconfig.cache
 C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Estacionamiento.csproj.CopyComplete
-C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index2.cshtml.g.cs
-C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout2.cshtml.g.cs
-C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Razor\Views\PruebaClase\Prueba.cshtml.g.cs
