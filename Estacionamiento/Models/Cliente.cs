@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 
 namespace Estacionamiento.Models
 {
-    public class Cliente
+    public class Cliente : Persona
     {
-        public int Dni { get; set; }
-
+        public Cliente(string nombre, string apellido, long cuil) : base(nombre, apellido)
+        {
+            Cuil = cuil;
+        }
+        public long Cuil { get; set; }
     }
 }

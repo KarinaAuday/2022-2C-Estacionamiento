@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace Estacionamiento.Models
 {
-    public class Empleado
+    public class Empleado : Persona
     {
-        public String Nombre { get; set; }
+        public int Id { get; set; }
+        public String Legajo { get; set; }
     }
 }

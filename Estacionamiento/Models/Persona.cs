@@ -32,10 +32,10 @@ namespace Estacionamiento.Models
 
         private int dni;
 
-        [StringLength(50, MinimumLength = 2, ErrorMessage = MsjeError.MinMaxString)]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = ErrorViewModel.MinMaxString)]
         public string Apellido { get; set; }
 
-        [Required(ErrorMessage = MsjeError.Requerido)]
+        [Required(ErrorMessage = ErrorViewModel.Requerido)]
 
         public string Nombre { get; set; }
 
