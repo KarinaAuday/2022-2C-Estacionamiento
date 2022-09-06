@@ -1,0 +1,64 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\KarinaAuday\\source\\repos\\2022-2C-Estacionamiento\\Estacionamiento\\Estacionamiento.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\KarinaAuday\\source\\repos\\2022-2C-Estacionamiento\\Estacionamiento\\Estacionamiento.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\KarinaAuday\\source\\repos\\2022-2C-Estacionamiento\\Estacionamiento\\Estacionamiento.csproj",
+        "projectName": "Estacionamiento",
+        "projectPath": "C:\\Users\\KarinaAuday\\source\\repos\\2022-2C-Estacionamiento\\Estacionamiento\\Estacionamiento.csproj",
+        "packagesPath": "C:\\Users\\KarinaAuday\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\KarinaAuday\\source\\repos\\2022-2C-Estacionamiento\\Estacionamiento\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\KarinaAuday\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.410\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
