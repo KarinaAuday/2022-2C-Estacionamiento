@@ -9,13 +9,15 @@ using System.Threading.Tasks;
 
 namespace Estacionamiento.Controllers
 {
+    //Herencia de clase Controller
     public class HomeController : Controller
-    {
-        private readonly ILogger<HomeController> _logger;
+    {   
+        //Comento _logger esto es para mas avanzado
+        //private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController()
         {
-            _logger = logger;
+            //_logger = logger;
         }
 
         public IActionResult Index()
