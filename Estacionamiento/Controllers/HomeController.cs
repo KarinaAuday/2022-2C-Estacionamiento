@@ -20,12 +20,17 @@ namespace Estacionamiento.Controllers
             //_logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int num)
         {
             return View();
         }
 
-     
+        public IActionResult Index2()
+        {
+            return View();
+        }
+
+
 
         public IActionResult Privacy()
         {

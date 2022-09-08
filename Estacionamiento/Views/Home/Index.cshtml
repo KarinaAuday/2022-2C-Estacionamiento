@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-   
+    int numero = 2;
+    List<int> numeros = new List<int> { 1, 2, 3, 4 };
+
 }
 
 <div class="text-center">
@@ -8,5 +10,29 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 <div>
+    <p>El valor de numero es @numero</p>
+    <a href="https://www.clarin.com/">El Diario</a>
+    <div>
+        @{
+            int num1 = 3;
+            int num2 = 5;
+            if (num2 > num1)
+            {
+                <p>El num2 es mayor</p>
 
+            }
+            else
+            {
+                <p> el num 1 es mayor</p>
+            }
+        }
+    </div>
+    <div>
+        @{ 
+            foreach (int num in numeros)
+            {
+                <span>@num</span>
+            }
+        }
+    </div>
 </div>
