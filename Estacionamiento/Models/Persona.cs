@@ -53,9 +53,9 @@ namespace Estacionamiento.Models
         }
 
 
-       // public Direccion Direccion { get; set; }
+       public Direccion Direccion { get; set; }
 
-       // public List<Telefono> Telefonos { get; set; }
+        public List<Telefonos> Telefonos { get; set; }
 
 
 

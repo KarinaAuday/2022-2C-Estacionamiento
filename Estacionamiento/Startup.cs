@@ -1,5 +1,7 @@
+using Estacionamiento.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +25,9 @@ namespace Estacionamiento
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
+       //IServiceCollection serviceCollection = services.AddDbContext<EstacionamientoContext>(option => option.UseInMemoryDatabase(EstacionamientoDB);
             services.AddControllersWithViews();
         }
 
