@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Estacionamiento.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,22 @@ namespace Estacionamiento.Controllers
         {
             return View();
         }
+        // Escuchar la solicitud de pedido de  Formulario  y darlo
+        [HttpGet]
         public IActionResult Create()
         {
+           
             return View();
+        }
+        // Recibe form y creo la persona
+        [HttpPost]
+        public IActionResult Create(string nombre, string apellido, int dni)
+        {
+            Persona persona1 = new Persona();
+            persona1.Nombre = nombre;
+            persona1.Apellido = apellido;
+            persona1.Dni = dni;
+            return View(persona1);
         }
 
     }

@@ -27,6 +27,7 @@ namespace Estacionamiento.Models
 
 
         [Range(1, 99999999, ErrorMessage = "Dni Invalido")]
+        [Display (Name ="Docu")]
         public int Dni { get => dni; set => dni = value; }
 
         private int dni;
@@ -35,6 +36,7 @@ namespace Estacionamiento.Models
         public string Apellido { get; set; }
 
         [Required(ErrorMessage = "Requerido")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Cantidad invalida de caracteres")]
 
         public string Nombre { get; set; }
 

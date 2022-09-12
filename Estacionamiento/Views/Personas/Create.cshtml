@@ -1,10 +1,23 @@
-﻿<form action="/" method="get">
-    Nombre : <input type="text" name="nombre" placeholder="Ingrese su nombre" value="" />
-    Apellido : <input type="text" name="apellido" value="" />
-    Dni : <input type="text" name="dni" value="" />
-    <input type="submit"  value="Enviar" />
+﻿@model Persona
+
+<form action="/Personas/Create" method="post">
+    <label asp-for="Nombre"></label>
+    <input asp-for="Nombre" type="text" placeholder="Ingrese su nombre" name="nombre" value="" />
+
+    <label asp-for="Apellido"></label>
+    <input asp-for="Apellido" type="text" placeholder="Ingrese su apellido" name="apellido" value="" />
 
 
+    <label asp-for="Dni"></label>
+    <input asp-for="Dni" type="number" placeholder="1111111" name="dni" value="" />
+
+    Submit :  <input type="submit" name="submit" value="Submit" />
 </form>
+@*puedo mostrar los datos cargados del modelo despues para editar por ejemplo*@
 
-
+@if (@Model != null)
+{
+    <div>
+        @Model.Nombre
+    </div>
+}
