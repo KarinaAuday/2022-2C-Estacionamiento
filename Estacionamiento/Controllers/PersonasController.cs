@@ -38,6 +38,32 @@ namespace Estacionamiento.Controllers
             return RedirectToAction("Index");
 
         }
+        // viebag es un metodo de transporte entre el controlador y la vista
+        //Con el id puede pasar un dato y dinamicamente me muestra e resultado. pongo un string en la url y lo toma
+        public IActionResult MostrarPersonas (int id )
+        {
+            ViewBag.Persona = DamePersona("Juan", "Perez" , id);
+            return View();
+        }
+        //Mando parametro por queryString mostrarPersonas2?nombre=karina&apellido=perez&dni=222
+        public IActionResult MostrarPersonas2(string nombre , string apellido, int dni)
+        {
+            ViewBag.Persona = DamePersona(nombre , apellido , dni);
+            return View();
+        }
+
+        //creo un metodo para que me devuelva una persona mandando paramtro sin formulario
+        private Persona DamePersona(string nombre, string apellido , int dni)
+        {
+            Persona persona = new Persona();
+            {
+                persona.Apellido = apellido;
+                persona.Nombre = nombre;
+                persona.Dni = dni;
+
+            };
+            return persona;
+        }
 
     }
 }

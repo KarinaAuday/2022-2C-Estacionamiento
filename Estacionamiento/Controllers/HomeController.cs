@@ -22,17 +22,36 @@ namespace Estacionamiento.Controllers
             return View(numero);
         }
 
-        public IActionResult Index2()
-        {
-            return View();
-        }
 
         public IActionResult Privacy()
         {
             return View();
         }
 
+        public IActionResult MostrarNumeros(List<int> numeritos)
+        {
+            numeritos = DameNumeros();
+            return View(numeritos);
+        }
 
+        private List<int> DameNumeros()
+        {
+            List<int> numeros = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 20 };
+            return DamePares(numeros);
+        }
+
+        private List<int> DamePares( List<int> ListNumeros)
+        {
+            var pares = ListNumeros.Where(num => num % 2 == 0);
+            //oredeno de manera descendente y pongo una condicion
+            var pares2 = ListNumeros.Where(num => num > 4 && num < 20).OrderByDescending(num => num);
+            // lo llevo a ToList para que lo traiga en una coleccion. antes de esto esta en modelo de consulta.
+            //se concreta la consulta al pasarla a la lsita
+            
+            
+
+            return pares.ToList();
+        }
        // public IActionResult Index2()
         //{
           //  return View();
