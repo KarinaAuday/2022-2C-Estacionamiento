@@ -17,9 +17,10 @@ namespace Estacionamiento.Controllers
         {
         }
 
-        public IActionResult Index(int numero)
+        public IActionResult Index()
         {
-            return View(numero);
+           // numero = 5555;
+            return View(model: "pepe");
         }
 
 

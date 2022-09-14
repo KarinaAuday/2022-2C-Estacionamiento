@@ -28,8 +28,17 @@ namespace Estacionamiento
         {
 
 
-       //IServiceCollection serviceCollection = services.AddDbContext<EstacionamientoContext>(option => option.UseInMemoryDatabase(EstacionamientoDB);
+            //IServiceCollection serviceCollection = services.AddDbContext<EstacionamientoContext>(option => option.UseInMemoryDatabase(EstacionamientoDB);
+            //Configurando con base de datos en memoria
+            services.AddDbContext<EstacionamientoContext>(options => options.UseInMemoryDatabase("EstacionamientoDb"));
+            //configurando SQL server
+          //  services.AddDbContext<EstacionamientoContext>(options => options.UseSqlServer("server=(localdb\\"));
+
+
+
             services.AddControllersWithViews();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

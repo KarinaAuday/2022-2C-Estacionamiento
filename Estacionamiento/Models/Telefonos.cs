@@ -7,5 +7,6 @@ namespace Estacionamiento.Models
 {
     public class Telefonos
     {
+        public int Id { get; set; }
     }
 }

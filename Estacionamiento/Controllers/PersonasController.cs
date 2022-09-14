@@ -52,6 +52,8 @@ namespace Estacionamiento.Controllers
             return View();
         }
 
+
+
         //creo un metodo para que me devuelva una persona mandando paramtro sin formulario
         private Persona DamePersona(string nombre, string apellido , int dni)
         {
@@ -65,5 +67,28 @@ namespace Estacionamiento.Controllers
             return persona;
         }
 
+        public IActionResult MostrarListaPersonas()
+        {
+            List<Persona> personas = new List<Persona>();
+            Persona persona1 = new Persona();
+            Persona persona2 = new Persona();
+            Persona persona3 = new Persona();
+
+            persona1.Apellido = "Perez";
+            persona1.Nombre = " Jose";
+
+            persona2.Apellido = "Gonzalez";
+            persona2.Nombre = "Mirtha";
+
+            persona3.Apellido = "Rodriguez";
+            persona3.Nombre = " Jorge";
+
+            personas.Add(persona1);
+            personas.Add(persona2);
+            personas.Add(persona3);
+
+
+            return View(personas);
+        }
     }
 }

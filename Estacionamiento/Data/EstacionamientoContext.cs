@@ -20,7 +20,10 @@ namespace Estacionamiento.Data
         // DBSet es lo que nos ofrece EF que es mejor pero mismo concepto. DBSet tambien es una coleccion
         public DbSet<Direccion> Direcciones { get; set; }
 
-        
+        protected override void OnModelCreating (ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 
 }
