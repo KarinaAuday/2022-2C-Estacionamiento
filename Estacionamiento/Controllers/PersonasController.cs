@@ -11,14 +11,39 @@ namespace Estacionamiento.Controllers
     public class PersonasController : Controller
     {
         //Creo un DB context. Fuerzo a recibir un contexto de base de datos
-      //  private readonly EstacionamientoContext _estacionamientoDB;
-        
+        private readonly EstacionamientoContext _contexto;
+
+        public PersonasController(EstacionamientoContext contexto)
+        {
+            this._contexto = contexto;
+        }
         //Mostrarme Personas
         public IActionResult Index()
         {
             //creo las Personas que traigo de la DB y la hago tolist
-           // List<Persona> Personas = _estacionamientoDB.Personas.ToList();
-            return View();
+            // List<Persona> Personas = _estacionamientoDB.Personas.ToList();
+
+            // var personas = new PersonasRepository();
+            //lista de personas
+            // return View(personas.Personas);
+            //  var personas2 = _contexto.Personas;
+            //var personas3 = _contexto.Personas.ToList();
+
+            return View(_contexto.Personas);
+        }
+
+        public IActionResult Index1()
+        {
+            //creo las Personas que traigo de la DB y la hago tolist
+            // List<Persona> Personas = _estacionamientoDB.Personas.ToList();
+
+            // var personas = new PersonasRepository();
+            //lista de personas
+            // return View(personas.Personas);
+            //  var personas2 = _contexto.Personas;
+            //var personas3 = _contexto.Personas.ToList();
+
+            return View(_contexto.Personas);
         }
         // Escuchar la solicitud de pedido de  Formulario  y darlo
         [HttpGet]
@@ -35,7 +60,14 @@ namespace Estacionamiento.Controllers
             persona1.Nombre = nombre;
             persona1.Apellido = apellido;
             persona1.Dni = dni;
-            return RedirectToAction("Index");
+            //aca me muestra la persona1 que le mando , puse ejemplo en create
+           //aca agrega
+            _contexto.Personas.Add(persona1);
+            //aca guarda cambios
+            _contexto.SaveChanges();
+            //ahora muestro lo creado
+            return RedirectToAction("index");
+
 
         }
         // viebag es un metodo de transporte entre el controlador y la vista

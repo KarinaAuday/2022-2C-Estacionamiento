@@ -25,7 +25,7 @@ namespace Estacionamiento.Models
 
         public Guid Id2 { get; set; }
 
-
+        [Required]
         [Range(1, 99999999, ErrorMessage = "Dni Invalido")]
         [Display (Name ="Docu")]
         public int Dni { get => dni; set => dni = value; }
@@ -40,7 +40,10 @@ namespace Estacionamiento.Models
 
         public string Nombre { get; set; }
 
-        [DataType(DataType.EmailAddress)]
+
+        [Required(ErrorMessage ="se necesita email")]
+        [EmailAddress(ErrorMessage ="mail null")]
+        [Display(Name ="Correo electronico")]
         public string Email { get; set; }
 
 

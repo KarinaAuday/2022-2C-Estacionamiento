@@ -7,6 +7,9 @@ namespace Estacionamiento.Models
 {
     public class Empleado
     {
+        public int Id { get; set; }
         public String Nombre { get; set; }
+
+        
     }
 }
