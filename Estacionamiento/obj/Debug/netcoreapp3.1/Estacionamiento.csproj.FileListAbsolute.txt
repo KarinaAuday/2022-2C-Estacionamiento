@@ -164,3 +164,8 @@ C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\De
 C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Razor\Views\Personas1\Edit.cshtml.g.cs
 C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Razor\Views\Personas1\Index.cshtml.g.cs
 C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Razor\Views\Personas\Index1.cshtml.g.cs
+C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Razor\Views\Empleados\Create.cshtml.g.cs
+C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Razor\Views\Empleados\Delete.cshtml.g.cs
+C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Razor\Views\Empleados\Details.cshtml.g.cs
+C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Razor\Views\Empleados\Edit.cshtml.g.cs
+C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Razor\Views\Empleados\Index.cshtml.g.cs

@@ -10,84 +10,62 @@ using Estacionamiento.Models;
 
 namespace Estacionamiento.Controllers
 {
-    public class Personas1Controller : Controller
+    public class EmpleadosController : Controller
     {
         private readonly EstacionamientoContext _context;
 
-        public Personas1Controller(EstacionamientoContext context)
+        public EmpleadosController(EstacionamientoContext context)
         {
             _context = context;
-            //#region primer persona prueba
-            ////pregunto a ver si hay algo en el contexto. aca me crea una primera persona si no hay niguna
-            //if (!_context.Personas.Any())
-            //{
-
-            //    //voy a crear una persona a
-            //    Persona persona = new Persona()
-            //    {
-            //        Nombre = "Charly",
-            //        Apellido = "Garcia",
-            //        Dni = 55667788,
-            //        Email = "charly@ort.edu.ar"
-
-            //    };
-            //    _context.Personas.Add(persona);
-            //    _context.SaveChanges();
-            //}
-            //#endregion
         }
 
-        // GET: Personas1
+        // GET: Empleadoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Personas.ToListAsync());
+            return View(await _context.Empleado.ToListAsync());
         }
 
-        // GET: Personas1/Details/5
-        //En este caso puedo pasar un id para que me muestre la persona con ese id. aca cheke que no sea nulo
-        public IActionResult Details(int? id)
+        // GET: Empleadoes/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            //aca busca a la persona por id
-            var persona = _context.Personas
-                .FirstOrDefault(m => m.Id == id);
-            if (persona == null)
+
+            var empleado = await _context.Empleado
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (empleado == null)
             {
-                //lo pruebo pasando nada y la respuesta en not found
-                //return NotFound();
-                //agregomensaje
-                return Content($"La persona con id {id} no fue encontrada");
+                return NotFound();
             }
 
-            return View(persona);
+            return View(empleado);
         }
 
-        // GET: Personas1/Create
+        // GET: Empleadoes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Personas1/Create
+        // POST: Empleadoes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Id2,Dni,Apellido,Nombre,Email")] Persona persona)
+        public async Task<IActionResult> Create([Bind("Legajo,Area,Id,Id2,Dni,Apellido,Nombre,Email")] Empleado empleado)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(persona);
+                _context.Add(empleado);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(persona);
+            return View(empleado);
         }
 
-        // GET: Personas1/Edit/5
+        // GET: Empleadoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,22 +73,22 @@ namespace Estacionamiento.Controllers
                 return NotFound();
             }
 
-            var persona = await _context.Personas.FindAsync(id);
-            if (persona == null)
+            var empleado = await _context.Empleado.FindAsync(id);
+            if (empleado == null)
             {
                 return NotFound();
             }
-            return View(persona);
+            return View(empleado);
         }
 
-        // POST: Personas1/Edit/5
+        // POST: Empleadoes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Id2,Dni,Apellido,Nombre,Email")] Persona persona)
+        public async Task<IActionResult> Edit(int id, [Bind("Legajo,Area,Id,Id2,Dni,Apellido,Nombre,Email")] Empleado empleado)
         {
-            if (id != persona.Id)
+            if (id != empleado.Id)
             {
                 return NotFound();
             }
@@ -119,12 +97,12 @@ namespace Estacionamiento.Controllers
             {
                 try
                 {
-                    _context.Update(persona);
+                    _context.Update(empleado);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PersonaExists(persona.Id))
+                    if (!EmpleadoExists(empleado.Id))
                     {
                         return NotFound();
                     }
@@ -135,10 +113,10 @@ namespace Estacionamiento.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(persona);
+            return View(empleado);
         }
 
-        // GET: Personas1/Delete/5
+        // GET: Empleadoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -146,30 +124,30 @@ namespace Estacionamiento.Controllers
                 return NotFound();
             }
 
-            var persona = await _context.Personas
+            var empleado = await _context.Empleado
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (persona == null)
+            if (empleado == null)
             {
                 return NotFound();
             }
 
-            return View(persona);
+            return View(empleado);
         }
 
-        // POST: Personas1/Delete/5
+        // POST: Empleadoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var persona = await _context.Personas.FindAsync(id);
-            _context.Personas.Remove(persona);
+            var empleado = await _context.Empleado.FindAsync(id);
+            _context.Empleado.Remove(empleado);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PersonaExists(int id)
+        private bool EmpleadoExists(int id)
         {
-            return _context.Personas.Any(e => e.Id == id);
+            return _context.Empleado.Any(e => e.Id == id);
         }
     }
 }

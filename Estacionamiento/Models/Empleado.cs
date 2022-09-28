@@ -1,14 +1,18 @@
-﻿using System;
+﻿using Estacionamiento.Hepers;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Estacionamiento.Models
 {
-    public class Empleado
+    public class Empleado : Persona
     {
-        public int Id { get; set; }
-        public String Nombre { get; set; }
+        //[Required(ErrorMessage = ErrMsgs.Requerido)]
+        //[StringLength(Restrictions.FloorL4, MinimumLength = Restrictions.CeilL1, ErrorMessage = ErrMsgs.FixedSize)]
+        public string CodigoEmpleado { get; set; }
+        public String Area { get; set; }
 
         
     }

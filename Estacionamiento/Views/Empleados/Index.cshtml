@@ -1,14 +1,10 @@
-﻿@model IEnumerable<Estacionamiento.Models.Persona>
+﻿@model IEnumerable<Estacionamiento.Models.Empleado>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<a class="btn btn-primary" Asp-action="incializar" asp-controller="InicializadorBase">Incializar Base de datos</a>
-
 <h1>Index</h1>
-
-
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -16,7 +12,13 @@
 <table class="table">
     <thead>
         <tr>
-           
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id2)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Dni)
             </th>
@@ -35,7 +37,13 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-           
+          
+            <td>
+                @Html.DisplayFor(modelItem => item.Area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id2)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Dni)
             </td>

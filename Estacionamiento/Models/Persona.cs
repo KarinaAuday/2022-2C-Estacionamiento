@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Estacionamiento.Hepers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace Estacionamiento.Models
 
         public int Id { get; set; }
 
-        public Guid Id2 { get; set; }
+        public  int Id2 { get; set; }
 
         [Required]
         [Range(1, 99999999, ErrorMessage = "Dni Invalido")]
@@ -38,12 +39,13 @@ namespace Estacionamiento.Models
         [Required(ErrorMessage = "Requerido")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Cantidad invalida de caracteres")]
 
+        [Display (Name ="Nombresito")]
         public string Nombre { get; set; }
 
 
-        [Required(ErrorMessage ="se necesita email")]
-        [EmailAddress(ErrorMessage ="mail null")]
-        [Display(Name ="Correo electronico")]
+        [Required(ErrorMessage = ErrMsgs.Requerido)]
+        [EmailAddress(ErrorMessage = ErrMsgs.NoValido)]
+        [Display(Name = Alias.Email)]
         public string Email { get; set; }
 
 
