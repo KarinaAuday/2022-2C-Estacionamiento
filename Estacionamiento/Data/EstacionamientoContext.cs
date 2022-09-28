@@ -22,10 +22,27 @@ namespace Estacionamiento.Data
 
         public DbSet<Empleado> Empleado { get; set; }
 
+        public DbSet<Vehiculo> Vehiculos { get; set; }
+
         protected override void OnModelCreating (ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+           
+            //relaciones muchos a muchos por medio de fluent API
+            modelBuilder.Entity<ClienteVehiculo>().HasKey(cv => new { cv.ClienteId, cv.VehiculoId });
+
+            modelBuilder.Entity<ClienteVehiculo>()
+                .HasOne(cv => cv.Cliente)
+                .WithMany(c => c.VehiculosAutorizados)
+                .HasForeignKey(cv => cv.ClienteId);
+
+            modelBuilder.Entity<ClienteVehiculo>()
+                .HasOne(cv => cv.Vehiculo)
+                .WithMany(v => v.PersonasAutorizadas)
+                .HasForeignKey(cv => cv.VehiculoId);
         }
+
+        public DbSet<Estacionamiento.Models.Vehiculo> Vehiculo { get; set; }
     }
 
 }
