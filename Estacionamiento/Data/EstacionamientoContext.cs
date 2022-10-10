@@ -24,21 +24,29 @@ namespace Estacionamiento.Data
 
         public DbSet<Vehiculo> Vehiculos { get; set; }
 
+        // En este metodo OnModelCreating hacemos todas definiciones que necesitamos
+        // para representar nuestras entidades en la Base de datos. Es lo minimo para poder usar luego Identity
+
+       
         protected override void OnModelCreating (ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
            
             //relaciones muchos a muchos por medio de fluent API
+            //Con el hasKey le indico cual es la clave primaria , o poniendo Key arriba del atributo (cuadno uso otro nombre que no sea por defecto classnameId)
+            
             modelBuilder.Entity<ClienteVehiculo>().HasKey(cv => new { cv.ClienteId, cv.VehiculoId });
 
+            //Ahota defino la relacion muchos a muchos
+            //Tiene 1 cliente que tiene muchos vehiculos 
             modelBuilder.Entity<ClienteVehiculo>()
                 .HasOne(cv => cv.Cliente)
-                .WithMany(c => c.VehiculosAutorizados)
+                .WithMany(cli => cli.VehiculosAutorizados)
                 .HasForeignKey(cv => cv.ClienteId);
 
             modelBuilder.Entity<ClienteVehiculo>()
                 .HasOne(cv => cv.Vehiculo)
-                .WithMany(v => v.PersonasAutorizadas)
+                .WithMany(vehiculo => vehiculo.PersonasAutorizadas)
                 .HasForeignKey(cv => cv.VehiculoId);
         }
 

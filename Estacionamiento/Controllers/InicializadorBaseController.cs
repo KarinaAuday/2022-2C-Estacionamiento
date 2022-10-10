@@ -18,7 +18,7 @@ namespace Estacionamiento.Controllers
         public IActionResult Incializar()
         {
             IncializarPersonas();
-
+            //va al index del controlador Personas1
             return RedirectToAction("Index", "Personas1");
         }
 

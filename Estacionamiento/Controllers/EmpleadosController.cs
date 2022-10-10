@@ -22,7 +22,7 @@ namespace Estacionamiento.Controllers
         // GET: Empleadoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Empleado.ToListAsync());
+            return View(_context.Empleado.ToList());
         }
 
         // GET: Empleadoes/Details/5

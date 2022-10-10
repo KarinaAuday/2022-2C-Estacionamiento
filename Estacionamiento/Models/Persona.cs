@@ -26,20 +26,20 @@ namespace Estacionamiento.Models
 
         public  int Id2 { get; set; }
 
-        [Required]
+        [Required (ErrorMessage = ErrMsgs.Requerido)]
         [Range(1, 99999999, ErrorMessage = "Dni Invalido")]
         [Display (Name ="Docu")]
         public int Dni { get => dni; set => dni = value; }
 
         private int dni;
 
+       
        [StringLength(50, MinimumLength = 2, ErrorMessage ="Cantidad invalida de caracteres")]
         public string Apellido { get; set; }
 
-        [Required(ErrorMessage = "Requerido")]
+       
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Cantidad invalida de caracteres")]
-
-        [Display (Name ="Nombresito")]
+        [Display (Name ="Nombre")]
         public string Nombre { get; set; }
 
 
@@ -48,6 +48,10 @@ namespace Estacionamiento.Models
         [Display(Name = Alias.Email)]
         public string Email { get; set; }
 
+
+        [Required(ErrorMessage = ErrMsgs.Requerido)]
+        [DataType(DataType.Date)]
+        public DateTime FechaDeNacimiento { get; set; }
 
         public string NombreCompleto
         {

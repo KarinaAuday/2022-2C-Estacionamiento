@@ -40,7 +40,8 @@ namespace Estacionamiento.Controllers
         // GET: Personas1
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Personas.ToListAsync());
+            //Saco el Async y el Await
+            return View(_context.Personas.ToList());
         }
 
         // GET: Personas1/Details/5
@@ -66,6 +67,8 @@ namespace Estacionamiento.Controllers
         }
 
         // GET: Personas1/Create
+        //puedo agregar o no el GET, si no lo agrego toma que es el get
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -76,26 +79,29 @@ namespace Estacionamiento.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Id2,Dni,Apellido,Nombre,Email")] Persona persona)
+
+        // el objeto persona en este caso lo crea el Model Binding
+        //modifico el Async
+        public IActionResult Create(String textoExtra ,[Bind("Id,Id2,Dni,Apellido,Nombre,Email")] Persona persona)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(persona);
-                await _context.SaveChangesAsync();
+                _context.Personas.Add(persona);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View(persona);
         }
 
         // GET: Personas1/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var persona = await _context.Personas.FindAsync(id);
+            var persona = _context.Personas.Find(id);
             if (persona == null)
             {
                 return NotFound();
@@ -108,7 +114,7 @@ namespace Estacionamiento.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Id2,Dni,Apellido,Nombre,Email")] Persona persona)
+        public IActionResult Edit(int id, [Bind("Id,Id2,Dni,Apellido,Nombre,Email")] Persona persona)
         {
             if (id != persona.Id)
             {
@@ -119,8 +125,22 @@ namespace Estacionamiento.Controllers
             {
                 try
                 {
-                    _context.Update(persona);
-                    await _context.SaveChangesAsync();
+                    //hace el Update si es valido el modelo. 
+                    //nosotros vamos a hacerlo eligiendo que campos actualizar, como no queremos que nos falle haremos lo sieguiente
+                    var personaEnDb = _context.Personas.Find(persona.Id);
+                    if (personaEnDb!= null)
+                    {
+                        //Actualizamos EN la DB las PROPIEDADES que quiero cambiar
+                        //Esto es importante para una actualizacion parcial
+                        personaEnDb.Nombre = persona.Nombre;
+                        personaEnDb.Apellido = persona.Apellido;
+                        _context.Update(personaEnDb);
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
