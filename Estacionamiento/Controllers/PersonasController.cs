@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Estacionamiento.Controllers
-{
+{//HECHO A MANO
     public class PersonasController : Controller
     {
         //Creo un DB context. Fuerzo a recibir un contexto de base de datos
@@ -18,6 +18,20 @@ namespace Estacionamiento.Controllers
             this._contexto = contexto;
         }
         //Mostrarme Personas
+
+        public IActionResult Repository()
+        {
+          //  creo las Personas que traigo de la DB y la hago tolist
+            
+              //  List<Persona> Personas = _contexto.Personas.ToList();
+
+             var personas = new PersonasRepository();
+            //lista de personas
+          
+            return View(personas.Personas);
+
+            // return View(_contexto.Personas);
+        }
         public IActionResult Index()
         {
             //creo las Personas que traigo de la DB y la hago tolist
@@ -29,7 +43,7 @@ namespace Estacionamiento.Controllers
             //  var personas2 = _contexto.Personas;
             //var personas3 = _contexto.Personas.ToList();
 
-            return View(_contexto.Personas);
+            return View(_contexto.Personas.ToList());
         }
 
         public IActionResult Index1()

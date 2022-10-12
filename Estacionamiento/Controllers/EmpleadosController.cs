@@ -22,7 +22,7 @@ namespace Estacionamiento.Controllers
         // GET: Empleadoes
         public async Task<IActionResult> Index()
         {
-            return View(_context.Empleado.ToList());
+            return View(_context.Empleados.ToList());
         }
 
         // GET: Empleadoes/Details/5
@@ -33,7 +33,7 @@ namespace Estacionamiento.Controllers
                 return NotFound();
             }
 
-            var empleado = await _context.Empleado
+            var empleado = await _context.Empleados
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (empleado == null)
             {
@@ -73,7 +73,7 @@ namespace Estacionamiento.Controllers
                 return NotFound();
             }
 
-            var empleado = await _context.Empleado.FindAsync(id);
+            var empleado = await _context.Empleados.FindAsync(id);
             if (empleado == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace Estacionamiento.Controllers
                 return NotFound();
             }
 
-            var empleado = await _context.Empleado
+            var empleado = await _context.Empleados
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (empleado == null)
             {
@@ -139,15 +139,15 @@ namespace Estacionamiento.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var empleado = await _context.Empleado.FindAsync(id);
-            _context.Empleado.Remove(empleado);
+            var empleado = await _context.Empleados.FindAsync(id);
+            _context.Empleados.Remove(empleado);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool EmpleadoExists(int id)
         {
-            return _context.Empleado.Any(e => e.Id == id);
+            return _context.Empleados.Any(e => e.Id == id);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Estacionamiento.Data
         // DBSet es lo que nos ofrece EF que es mejor que LIST pero mismo concepto. DBSet tambien es una coleccion
         public DbSet<Direccion> Direcciones { get; set; }
 
-        public DbSet<Empleado> Empleado { get; set; }
+        public DbSet<Empleado> Empleados { get; set; }
 
         public DbSet<Vehiculo> Vehiculos { get; set; }
 

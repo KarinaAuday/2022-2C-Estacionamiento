@@ -10,6 +10,7 @@ using Estacionamiento.Models;
 
 namespace Estacionamiento.Controllers
 {
+    //HECHO CON SCAFOLDING
     public class Personas1Controller : Controller
     {
         private readonly EstacionamientoContext _context;
