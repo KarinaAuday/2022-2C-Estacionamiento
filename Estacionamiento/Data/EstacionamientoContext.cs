@@ -1,4 +1,6 @@
 ﻿using Estacionamiento.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 namespace Estacionamiento.Data
 {
     // me agregar el paquete entityframework
-    public class EstacionamientoContext : DbContext
+    public class EstacionamientoContext : IdentityDbContext<IdentityUser<int>,IdentityRole<int>,int>
     {
         //declaro el constructor. 
         public EstacionamientoContext (DbContextOptions <EstacionamientoContext> opcionesConfiguracion) : base (opcionesConfiguracion)
@@ -24,17 +26,33 @@ namespace Estacionamiento.Data
 
         public DbSet<Vehiculo> Vehiculos { get; set; }
 
+        public DbSet<Telefonos> TelefonosP { get; set; }
+
+        public DbSet<Cliente> Clientes { get; set; }
+
+
+        public DbSet<ClienteVehiculo> ClientesVehiculos { get; set; }
+
+        public DbSet<Pago> Pagos { get; set; }
+
+        public DbSet<Rol> Roles{ get; set; }
+
+
+
         // En este metodo OnModelCreating hacemos todas definiciones que necesitamos
         // para representar nuestras entidades en la Base de datos. Es lo minimo para poder usar luego Identity
 
-       
-        protected override void OnModelCreating (ModelBuilder modelBuilder)
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-           
+
+            modelBuilder.Entity<Pago>().Property(pa => pa.Monto).HasColumnType("decimal(38,10)");
+
             //relaciones muchos a muchos por medio de fluent API
             //Con el hasKey le indico cual es la clave primaria , o poniendo Key arriba del atributo (cuadno uso otro nombre que no sea por defecto classnameId)
-            
+
+
             modelBuilder.Entity<ClienteVehiculo>().HasKey(cv => new { cv.ClienteId, cv.VehiculoId });
 
             //Ahota defino la relacion muchos a muchos
@@ -48,9 +66,20 @@ namespace Estacionamiento.Data
                 .HasOne(cv => cv.Vehiculo)
                 .WithMany(vehiculo => vehiculo.PersonasAutorizadas)
                 .HasForeignKey(cv => cv.VehiculoId);
+
+            //Modifico la Entidad Identity User para que guarde en Las tablas que yo quiero
+            modelBuilder.Entity<IdentityUser<int>>().ToTable("Personas");
+            modelBuilder.Entity<IdentityRole<int>>().ToTable("Roles");
+            //Relacion Muchos a Muchos
+            modelBuilder.Entity<IdentityUserRole<int>>().ToTable("PersonasRoles");
+
         }
 
         public DbSet<Estacionamiento.Models.Vehiculo> Vehiculo { get; set; }
+
+        public DbSet<Estacionamiento.Models.Cliente> Cliente { get; set; }
+
+        public DbSet<Estacionamiento.Models.Telefonos> Telefonos { get; set; }
     }
 
 }

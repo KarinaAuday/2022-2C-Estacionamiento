@@ -1,4 +1,5 @@
 ﻿using Estacionamiento.Hepers;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Estacionamiento.Models
 {
-    public class Persona
+    public class Persona : IdentityUser<int> 
     {
         public Persona()
         {
@@ -21,10 +22,10 @@ namespace Estacionamiento.Models
 
         }
 
+        // Comento el Id por que ya hereda de IdentityUser
+        // public int Id { get; set; } 
 
-        public int Id { get; set; }
-
-        public  int Id2 { get; set; }
+        public int Id2 { get; set; }
 
         [Required (ErrorMessage = ErrMsgs.Requerido)]
         [Range(1, 99999999, ErrorMessage = "Dni Invalido")]
@@ -46,7 +47,13 @@ namespace Estacionamiento.Models
         [Required(ErrorMessage = ErrMsgs.Requerido)]
         [EmailAddress(ErrorMessage = ErrMsgs.NoValido)]
         [Display(Name = Alias.Email)]
-        public string Email { get; set; }
+        //Hereda de identityUser pero le hago override. Este email lo especializamos, y el get y setter normal se lo dejo a la clase base
+        public override string Email
+        {
+
+            get { return base.Email; }
+            set { base.Email = value; }
+        }
 
 
         [Required(ErrorMessage = ErrMsgs.Requerido)]

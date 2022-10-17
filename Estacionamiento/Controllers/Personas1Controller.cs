@@ -39,7 +39,7 @@ namespace Estacionamiento.Controllers
         }
 
         // GET: Personas1
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             //Saco el Async y el Await
             return View(_context.Personas.ToList());
@@ -91,6 +91,11 @@ namespace Estacionamiento.Controllers
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
+            //Aca puedo agregar un error que quiero que aparezca en la vista luego cuando invoque el ModelState
+           //si pongo String.empty no asoscia a ninguna propiedad. SI quiero asociar a alguna propiedad pongo el nombre de la propiedad
+
+            ModelState.AddModelError(String.Empty, "ERROR PRUEBA");
+                
             return View(persona);
         }
 

@@ -20,21 +20,21 @@ namespace Estacionamiento.Controllers
         }
 
         // GET: Empleadoes
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             return View(_context.Empleados.ToList());
         }
 
         // GET: Empleadoes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var empleado = await _context.Empleados
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var empleado =  _context.Empleados
+                .FirstOrDefault(m => m.Id == id);
             if (empleado == null)
             {
                 return NotFound();
