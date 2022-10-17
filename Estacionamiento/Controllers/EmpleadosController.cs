@@ -19,7 +19,7 @@ namespace Estacionamiento.Controllers
             _context = context;
         }
 
-        // GET: Empleadoes
+        // GET: Empleados
         public IActionResult Index()
         {
             return View(_context.Empleados.ToList());
