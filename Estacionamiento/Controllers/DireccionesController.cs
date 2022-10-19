@@ -20,21 +20,21 @@ namespace Estacionamiento.Controllers
         }
 
         // GET: Direcciones
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Direcciones.ToListAsync());
+            return View( _context.Direcciones.ToList());
         }
 
         // GET: Direcciones/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var direccion = await _context.Direcciones
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var direccion =  _context.Direcciones
+                .FirstOrDefault(m => m.Id == id);
             if (direccion == null)
             {
                 return NotFound();
@@ -66,14 +66,14 @@ namespace Estacionamiento.Controllers
         }
 
         // GET: Direcciones/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var direccion = await _context.Direcciones.FindAsync(id);
+            var direccion = _context.Direcciones.Find(id);
             if (direccion == null)
             {
                 return NotFound();

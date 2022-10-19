@@ -4,20 +4,14 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Detalles</h1>
 
 <div>
     <h4>Persona</h4>
     <hr />
     <dl class="row">
         <!-- dl y dt Algunos usos comunes para este elemento son implementar un glosario o para desplegar metadatos (lista de pares llave-valor).--->
-        <dt class="col-sm-2">
-
-            @Html.DisplayNameFor(model => model.Id2)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Id2)
-        </dd>
+       
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Dni)
         </dt>
@@ -46,6 +40,6 @@
 </div>
 <div>
 
-    <a asp-action="Edit" asp-route-id="@Model.Id" asp-route-miparametro="Prueba">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Id" asp-route-nombre=@Model.NombreCompleto>Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
