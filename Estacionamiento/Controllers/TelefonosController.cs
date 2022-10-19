@@ -48,7 +48,7 @@ namespace Estacionamiento.Controllers
         // GET: Telefonos/Create
         public IActionResult Create()
         {
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator");
+            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "NombreCompleto");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace Estacionamiento.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator", telefonos.PersonaId);
+            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "NombreCompleto", telefonos.PersonaId);
             return View(telefonos);
         }
 
@@ -82,7 +82,7 @@ namespace Estacionamiento.Controllers
             {
                 return NotFound();
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator", telefonos.PersonaId);
+            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "NombreCompleto", telefonos.PersonaId);
             return View(telefonos);
         }
 
@@ -118,7 +118,7 @@ namespace Estacionamiento.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator", telefonos.PersonaId);
+            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "NombreCompleto", telefonos.PersonaId);
             return View(telefonos);
         }
 
