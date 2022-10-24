@@ -10,43 +10,38 @@ using System.Threading.Tasks;
 
 namespace Estacionamiento.Controllers
 {
+    //manejo de cuentas. 
+
     public class AccountController : Controller
     {
-        private readonly EstacionamientoContext _context;
+        //private readonly EstacionamientoContext _context;
         private readonly UserManager<Persona> _userManager;
         private readonly SignInManager<Persona> _signinManager;
-        private readonly RoleManager<Rol> _rolManager;
-        private const string passDefault = "Password1!";
+        //private readonly RoleManager<Rol> _rolManager;
+       //private const string passDefault = "Password1!";
 
-        public AccountController(
-            EstacionamientoContext context,
-            UserManager<Persona> userManager,
-            SignInManager<Persona> signinManager,
-            RoleManager<Rol> rolManager
-            )
-        {
-            this._context = context;
+        public AccountController(UserManager<Persona> userManager,SignInManager<Persona> signInManager) {
             this._userManager = userManager;
-            this._signinManager = signinManager;
-            this._rolManager = rolManager;
+            this._signinManager = signInManager;
+        
         }
 
-        [HttpGet]
-        public IActionResult EmailDisponible(string email)
-        {
-            var emailUsado = _context.Personas.Any(p => p.Email == email);
+        //[HttpGet]
+       // public IActionResult EmailDisponible(string email)
+        //{
+         //   var emailUsado = _context.Personas.Any(p => p.Email == email);
 
-            if (!emailUsado)
-            {
-                //Si no está el Email usado, entonces, el email está disponible.                
-                return Json(true);
-            }
-            else
-            {
-                //El Email ya está en uso, entonces, no se cumple la validación, Se devuelve un mensaje de error.
-                return Json($"El correo {email} ya está en uso.");
-            }
-        }
+        //    if (!emailUsado)
+        //    {
+        //        //Si no está el Email usado, entonces, el email está disponible.                
+        //        return Json(true);
+        //    }
+        //    else
+        //    {
+        //        //El Email ya está en uso, entonces, no se cumple la validación, Se devuelve un mensaje de error.
+        //        return Json($"El correo {email} ya está en uso.");
+        //    }
+        //}
 
         public ActionResult Registrar()
         {
@@ -55,154 +50,168 @@ namespace Estacionamiento.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> Registrar(RegistracionViewModel viewModel)
+
+        //Pued usar Bind o no, siempre tratara de machear los que llega con las propiedades del model
+        public async Task <ActionResult> Registrar([Bind("Email,Password,ConfirmacionPassword")]RegistracionViewModel viewModel)
         {
             //Hago con model lo que necesito.
 
             if (ModelState.IsValid)
             {
                 Cliente clienteACrear = new Cliente();
-                clienteACrear.Email = viewModel.Email;
-                clienteACrear.UserName = viewModel.Email;
-
-                var resultadoCreacion = await _userManager.CreateAsync(clienteACrear, viewModel.Password);
+                {
+                    clienteACrear.Email = viewModel.Email;
+                    clienteACrear.UserName = viewModel.Email;
+                }
+                //En este caso si se usar el metodo create asyn 
+                //Esto me devuelve un identity Result ,  un resultado booleano
+                //Agrego la password , y el create se encarga de tomar este string y hacer el hashing
+                var resultadoCreacion = await  _userManager.CreateAsync(clienteACrear, viewModel.Password);
 
                 if (resultadoCreacion.Succeeded)
                 {
                     //Agrego el rol, pero antes verifico solo en este caso si existen los roles 
-                    await CrearRolesBase();
+                   // CrearRolesBase();
 
 
                     //le agrego el rol de cliente por ejemplo.
-                    var resultado = await _userManager.AddToRoleAsync(clienteACrear, "Cliente");
+                    //var resultado =  _userManager.AddToRoleAsync(clienteACrear, "Cliente");
 
-                    if (resultado.Succeeded)
-                    {
-                        //pudo crear - le hago sign-in directamente.
-                        await _signinManager.SignInAsync(clienteACrear, isPersistent: false);
-                        return RedirectToAction("Edit", "Clientes", new { id = clienteACrear.Id });
-                    }
+                    //if (resultado.Succeeded)
+                    //{
+                       
+                    
+                    //pudo crear - le hago sign-in directamente. que no sea persistente, o sea que no guarde en cookie
+                    await _signinManager.SignInAsync(clienteACrear, isPersistent: false);
+
+                    // redirecciona con el id del Cliente 
+                    return RedirectToAction("Edit", "Personas1", new { id = clienteACrear.Id });
+                    
+                    //return RedirectToAction("Index", "Home");
+                    //}
 
                     //Si no fué exitoso por ejemplo, podría volver atráz el cambio o no.
                 }
 
                 //no pudo
-                //tratamiento de errores
+                //tratamiento de errores , con el forEach
                 foreach (var error in resultadoCreacion.Errors)
                 {
+                    //Estos errores se mostraran en la vista
                     ModelState.AddModelError(string.Empty, error.Description);
+
                 }
             }
 
             return View(viewModel);
         }
 
-        public ActionResult IniciarSesion(string returnurl)
-        {
-            TempData["returnUrl"] = returnurl;
-            return View();
-        }
+        //public ActionResult IniciarSesion(string returnurl)
+        //{
+        //    TempData["returnUrl"] = returnurl;
+        //    return View();
+        //}
 
-        [HttpPost]
-        public async Task<ActionResult> IniciarSesion(Login viewModel)
-        {
-            string returnUrl = TempData["returnUrl"] as string;
+        //[HttpPost]
+        //public async Task<ActionResult> IniciarSesion(Login viewModel)
+        //{
+        //    string returnUrl = TempData["returnUrl"] as string;
 
-            if (ModelState.IsValid)
-            {
-                var resultadoSignIn = await _signinManager.PasswordSignInAsync(viewModel.Email, viewModel.Password, viewModel.Recordarme, false);
+        //    if (ModelState.IsValid)
+        //    {
+        //        var resultadoSignIn = await _signinManager.PasswordSignInAsync(viewModel.Email, viewModel.Password, viewModel.Recordarme, false);
 
-                if (resultadoSignIn.Succeeded)
-                {
-                    if (!string.IsNullOrEmpty(returnUrl))
-                    {
-                        return Redirect(returnUrl);
-                    }
+        //        if (resultadoSignIn.Succeeded)
+        //        {
+        //            if (!string.IsNullOrEmpty(returnUrl))
+        //            {
+        //                return Redirect(returnUrl);
+        //            }
 
-                    return RedirectToAction("Index", "Home");
-                }
+        //            return RedirectToAction("Index", "Home");
+        //        }
 
-                ModelState.AddModelError(string.Empty, "Inicio de sesión inválido");
-            }
+        //        ModelState.AddModelError(string.Empty, "Inicio de sesión inválido");
+        //    }
 
-            return View(viewModel);
-        }
+        //    return View(viewModel);
+        //}
 
-        public async Task<ActionResult> CerrarSesion()
-        {
-            await _signinManager.SignOutAsync();
+        //public async Task<ActionResult> CerrarSesion()
+        //{
+        //    await _signinManager.SignOutAsync();
 
-            return RedirectToAction("Index", "home");
-        }
+        //    return RedirectToAction("Index", "home");
+        //}
 
-        [HttpGet]
-        public IActionResult AccesoDenegado()
-        {
-            return View();
-        }
-
-
-        private async Task CrearRolesBase()
-        {
-            List<string> roles = new List<string>() { "Administrator", "Cliente", "Empleado", "UsuarioBase" };
-
-            foreach (string rol in roles)
-            {
-                await CrearRole(rol);
-            }
-        }
-
-        private async Task CrearRole(string rolName)
-        {
-            if (!await _rolManager.RoleExistsAsync(rolName))
-            {
-                await _rolManager.CreateAsync(new Rol(rolName));
-            }
-        }
+        //[HttpGet]
+        //public IActionResult AccesoDenegado()
+        //{
+        //    return View();
+        //}
 
 
-        public async Task<IActionResult> CrearAdmin()
-        {
-            Persona account = new Persona()
-            {
-                Nombre = "Admin",
-                Apellido = "Del Mañana",
-                Email = "admin@admin.com",
-                UserName = "admin@admin.com"
-            };
+        //private async Task CrearRolesBase()
+        //{
+        //    List<string> roles = new List<string>() { "Administrator", "Cliente", "Empleado", "UsuarioBase" };
 
-            var resuAdm = await _userManager.CreateAsync(account, passDefault);
-            if (resuAdm.Succeeded)
-            {
-                string rolAdm = "Administrador";
-                await CrearRole(rolAdm);
-                await _userManager.AddToRoleAsync(account, rolAdm);
-                TempData["Mensaje"] = $"Empleado creado {account.Email} y {passDefault}";
-            }
+        //    foreach (string rol in roles)
+        //    {
+        //        await CrearRole(rol);
+        //    }
+        //}
 
-            return RedirectToAction("Index", "Home");
-        }
+        //private async Task CrearRole(string rolName)
+        //{
+        //    if (!await _rolManager.RoleExistsAsync(rolName))
+        //    {
+        //        await _rolManager.CreateAsync(new Rol(rolName));
+        //    }
+        //}
 
-        public async Task<IActionResult> CrearEmpleado()
-        {
-            Empleado account = new Empleado()
-            {
-                Nombre = "Empleado",
-                Apellido = "Del Año",
-                Email = "empleado@empleado.com",
-                UserName = "empleado@empleado.com"
-            };
 
-            var resuAdm = await _userManager.CreateAsync(account, passDefault);
-            if (resuAdm.Succeeded)
-            {
-                string rolAdm = "Empleado";
-                await CrearRole(rolAdm);
-                await _userManager.AddToRoleAsync(account, rolAdm);
-                TempData["Mensaje"] = $"Empleado creado {account.Email} y {passDefault}";
-            }
+        //public async Task<IActionResult> CrearAdmin()
+        //{
+        //    Persona account = new Persona()
+        //    {
+        //        Nombre = "Admin",
+        //        Apellido = "Del Mañana",
+        //        Email = "admin@admin.com",
+        //        UserName = "admin@admin.com"
+        //    };
 
-            return RedirectToAction("Index", "Home");
-        }
+        //    var resuAdm = await _userManager.CreateAsync(account, passDefault);
+        //    if (resuAdm.Succeeded)
+        //    {
+        //        string rolAdm = "Administrador";
+        //        await CrearRole(rolAdm);
+        //        await _userManager.AddToRoleAsync(account, rolAdm);
+        //        TempData["Mensaje"] = $"Empleado creado {account.Email} y {passDefault}";
+        //    }
+
+        //    return RedirectToAction("Index", "Home");
+        //}
+
+        //public async Task<IActionResult> CrearEmpleado()
+        //{
+        //    Empleado account = new Empleado()
+        //    {
+        //        Nombre = "Empleado",
+        //        Apellido = "Del Año",
+        //        Email = "empleado@empleado.com",
+        //        UserName = "empleado@empleado.com"
+        //    };
+
+        //    var resuAdm = await _userManager.CreateAsync(account, passDefault);
+        //    if (resuAdm.Succeeded)
+        //    {
+        //        string rolAdm = "Empleado";
+        //        await CrearRole(rolAdm);
+        //        await _userManager.AddToRoleAsync(account, rolAdm);
+        //        TempData["Mensaje"] = $"Empleado creado {account.Email} y {passDefault}";
+        //    }
+
+        //    return RedirectToAction("Index", "Home");
+        //}
     }
 }

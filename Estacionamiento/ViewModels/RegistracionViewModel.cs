@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Estacionamiento.ViewModels
 {
+
+    //Modelo hecho para registracion de usuario
     public class RegistracionViewModel
     {
         [Required(ErrorMessage = ErrMsgs.Requerido)]
@@ -17,12 +19,12 @@ namespace Estacionamiento.ViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = ErrMsgs.Requerido)]
-        [DataType(DataType.Password, ErrorMessage = ErrMsgs.NoValido)]
+        [DataType(DataType.Password)]
         [Display(Name = Alias.Password)]
         public string Password { get; set; }
 
         [Required(ErrorMessage = ErrMsgs.Requerido)]
-        [DataType(DataType.Password, ErrorMessage = ErrMsgs.NoValido)]
+        [DataType(DataType.Password)]
         //Me permite comparar a password
         [Compare("Password", ErrorMessage = ErrMsgs.PassMissmatch)]
         [Display(Name = Alias.PassConfirm)]

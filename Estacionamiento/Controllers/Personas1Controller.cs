@@ -120,9 +120,9 @@ namespace Estacionamiento.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,Id2,Dni,Apellido,Nombre,Email")] Persona persona)
+        public IActionResult Edit(int id, [Bind("Id,Id2,Dni,Apellido,Nombre,Email")] Persona personaFormulario)
         {
-            if (id != persona.Id)
+            if (id != personaFormulario.Id)
             {
                 return NotFound();
             }
@@ -131,15 +131,27 @@ namespace Estacionamiento.Controllers
             {
                 try
                 {
+                    //verifico la concurrencia , para verificar que no se este editando de otro lado.
+                    //Si el obeto fue modificado desde diferentes lugares, necesito asegurar el Mapeo
+                    var personaEnDb = _context.Personas.Find(personaFormulario.Id);
+                 
                     //hace el Update si es valido el modelo. 
                     //nosotros vamos a hacerlo eligiendo que campos actualizar, como no queremos que nos falle haremos lo sieguiente
-                    var personaEnDb = _context.Personas.Find(persona.Id);
+                    
                     if (personaEnDb!= null)
                     {
                         //Actualizamos EN la DB las PROPIEDADES que quiero cambiar
                         //Esto es importante para una actualizacion parcial
-                        personaEnDb.Nombre = persona.Nombre;
-                        personaEnDb.Apellido = persona.Apellido;
+                        personaEnDb.Nombre = personaFormulario.Nombre;
+                        personaEnDb.Apellido = personaFormulario.Apellido;
+                        personaEnDb.Dni = personaFormulario.Dni;
+
+                        if (!ActualizarEmail(personaFormulario , personaEnDb))
+                        {
+                            ModelState.AddModelError("Email", "El email ya está en uso");
+                            return View(personaFormulario);                        
+                        }
+
                         _context.Update(personaEnDb);
                         _context.SaveChanges();
                     }
@@ -150,7 +162,7 @@ namespace Estacionamiento.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PersonaExists(persona.Id))
+                    if (!PersonaExists(personaFormulario.Id))
                     {
                         return NotFound();
                     }
@@ -161,7 +173,7 @@ namespace Estacionamiento.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(persona);
+            return View(personaFormulario);
         }
 
         // GET: Personas1/Delete/5
@@ -197,5 +209,40 @@ namespace Estacionamiento.Controllers
         {
             return _context.Personas.Any(e => e.Id == id);
         }
+
+        private bool ActualizarEmail(Persona perForm, Persona perDb)
+        {
+            bool resultado = true;
+
+            try
+            {
+                if (!perDb.NormalizedEmail.Equals(perForm.Email.ToUpper()))
+                {
+                    //Si no son iguales proceso. verifico si ya existe el mail
+                    if (_context.Personas.Any(p => p.NormalizedEmail == perForm.Email.ToUpper()))
+                    {
+                        resultado = false;
+                    }
+                    else
+                    {
+                        //como no existe actualizo
+                        perDb.Email = perForm.Email;
+                        perDb.NormalizedEmail = perForm.Email.ToUpper();
+                        perDb.UserName = perForm.Email;
+                        perDb.NormalizedUserName = perForm.NormalizedEmail;
+
+
+                    }
+                }
+               
+
+            } catch
+            {
+                resultado = false;
+            }
+            return resultado;
+            
+        }
+
     }
 }
