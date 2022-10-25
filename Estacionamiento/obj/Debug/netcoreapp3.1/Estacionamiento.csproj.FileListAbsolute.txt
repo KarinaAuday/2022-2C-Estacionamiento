@@ -198,4 +198,5 @@ C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\bin\De
 C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Core.dll
 C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Razor\Views\Account\Registrar.cshtml.g.cs
+C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Razor\Views\Account\IniciarSesion.cshtml.g.cs
 C:\Users\KarinaAuday\source\repos\2022-2C-Estacionamiento\Estacionamiento\obj\Debug\netcoreapp3.1\Estacionamiento.csproj.AssemblyReference.cache

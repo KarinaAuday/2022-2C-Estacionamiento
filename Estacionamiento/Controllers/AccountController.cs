@@ -106,6 +106,39 @@ namespace Estacionamiento.Controllers
             return View(viewModel);
         }
 
+        public IActionResult IniciarSesion()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task <IActionResult> IniciarSesion( Login loginViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                //metodo asincronico para password adato asincronico todo
+                //le paso directamente el email (username)
+                //recordarme lo defino para ver si defini que sea persistente o no
+               var resultado =  await _signinManager.PasswordSignInAsync(loginViewModel.Email, loginViewModel.Password, loginViewModel.Recordarme, false);
+                //me devuelve un signinresult
+                if (resultado.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                //agrego un errror si no pudo procesar
+                ModelState.AddModelError(String.Empty, "Inicio de Sesión inválida");
+            }
+            return View(loginViewModel);
+        }
+
+        
+        public async Task<IActionResult> CerrarSesion()
+        {
+            //Aca cierro sesion, le dice al browser que elimine esa cookie
+            await _signinManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+
         //public ActionResult IniciarSesion(string returnurl)
         //{
         //    TempData["returnUrl"] = returnurl;

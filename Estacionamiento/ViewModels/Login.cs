@@ -11,6 +11,7 @@ namespace Estacionamiento.ViewModels
     public class Login
     {
         [Required(ErrorMessage = ErrMsgs.Requerido)]
+        [Display(Name = "Correo Electrónico")]
         [EmailAddress(ErrorMessage = ErrMsgs.NoValido)]
         public string Email { get; set; }
 
