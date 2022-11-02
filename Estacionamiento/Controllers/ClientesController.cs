@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Estacionamiento.Data;
 using Estacionamiento.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Estacionamiento.Controllers
 {
+    //autoriza con sesion inciada
+    [Authorize]
     public class ClientesController : Controller
     {
         private readonly EstacionamientoContext _context;
@@ -66,9 +69,10 @@ namespace Estacionamiento.Controllers
         }
 
         // GET: Clientes/Edit/5
+        [Authorize (Roles ="Cliente,Empleado,Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Cliente == null)
             {
                 return NotFound();
             }
@@ -117,6 +121,7 @@ namespace Estacionamiento.Controllers
         }
 
         // GET: Clientes/Delete/5
+        [Authorize (Roles="Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Estacionamiento.Data;
 using Estacionamiento.Models;
+using Microsoft.AspNetCore.Identity;
+using Estacionamiento.Hepers;
 
 namespace Estacionamiento.Controllers
 {
@@ -14,28 +16,13 @@ namespace Estacionamiento.Controllers
     public class Personas1Controller : Controller
     {
         private readonly EstacionamientoContext _context;
+        private readonly UserManager<Persona> _userManager;
 
-        public Personas1Controller(EstacionamientoContext context)
+        public Personas1Controller(EstacionamientoContext context, UserManager<Persona> userManager)
         {
             _context = context;
-            //#region primer persona prueba
-            ////pregunto a ver si hay algo en el contexto. aca me crea una primera persona si no hay niguna
-            //if (!_context.Personas.Any())
-            //{
-
-            //    //voy a crear una persona a
-            //    Persona persona = new Persona()
-            //    {
-            //        Nombre = "Charly",
-            //        Apellido = "Garcia",
-            //        Dni = 55667788,
-            //        Email = "charly@ort.edu.ar"
-
-            //    };
-            //    _context.Personas.Add(persona);
-            //    _context.SaveChanges();
-            //}
-            //#endregion
+            this._userManager = userManager;
+            
         }
 
         // GET: Personas1
@@ -83,19 +70,33 @@ namespace Estacionamiento.Controllers
 
         // el objeto persona en este caso lo crea el Model Binding
         //modifico el Async
-        public IActionResult Create(String textoExtra ,[Bind("Id,Id2,Dni,Apellido,Nombre,Email")] Persona persona)
+        public async Task<IActionResult> Create([Bind("Id,Id2,Dni,Apellido,Nombre,Email")] Persona persona)
         {
             if (ModelState.IsValid)
             {
-                _context.Personas.Add(persona);
-                _context.SaveChanges();
+                // _context.Personas.Add(persona);
+                //_context.SaveChanges();
+                persona.UserName = persona.Email;
+                var resultadoCrear = await _userManager.CreateAsync(persona, Config.PasswordAdmin);
+                if (resultadoCrear.Succeeded)
+                {
+                    
+
+                    //Agrego el rol correspondiente
+                    IdentityResult resultadoAddRole;
+                    resultadoAddRole = await _userManager.AddToRoleAsync(persona, "Cliente");
+                    if (resultadoAddRole.Succeeded)
+                    {
+                        RedirectToAction("Index", "Persona1");
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
             //Aca puedo agregar un error que quiero que aparezca en la vista luego cuando invoque el ModelState
-           //si pongo String.empty no asoscia a ninguna propiedad. SI quiero asociar a alguna propiedad pongo el nombre de la propiedad
+            //si pongo String.empty no asoscia a ninguna propiedad. SI quiero asociar a alguna propiedad pongo el nombre de la propiedad
 
             ModelState.AddModelError(String.Empty, "ERROR PRUEBA");
-                
+
             return View(persona);
         }
 
@@ -134,11 +135,11 @@ namespace Estacionamiento.Controllers
                     //verifico la concurrencia , para verificar que no se este editando de otro lado.
                     //Si el obeto fue modificado desde diferentes lugares, necesito asegurar el Mapeo
                     var personaEnDb = _context.Personas.Find(personaFormulario.Id);
-                 
+
                     //hace el Update si es valido el modelo. 
                     //nosotros vamos a hacerlo eligiendo que campos actualizar, como no queremos que nos falle haremos lo sieguiente
-                    
-                    if (personaEnDb!= null)
+
+                    if (personaEnDb != null)
                     {
                         //Actualizamos EN la DB las PROPIEDADES que quiero cambiar
                         //Esto es importante para una actualizacion parcial
@@ -146,10 +147,10 @@ namespace Estacionamiento.Controllers
                         personaEnDb.Apellido = personaFormulario.Apellido;
                         personaEnDb.Dni = personaFormulario.Dni;
 
-                        if (!ActualizarEmail(personaFormulario , personaEnDb))
+                        if (!ActualizarEmail(personaFormulario, personaEnDb))
                         {
                             ModelState.AddModelError("Email", "El email ya está en uso");
-                            return View(personaFormulario);                        
+                            return View(personaFormulario);
                         }
 
                         _context.Update(personaEnDb);
@@ -234,14 +235,15 @@ namespace Estacionamiento.Controllers
 
                     }
                 }
-               
 
-            } catch
+
+            }
+            catch
             {
                 resultado = false;
             }
             return resultado;
-            
+
         }
 
     }

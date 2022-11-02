@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Estacionamiento.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Estacionamiento
 {
@@ -55,7 +56,13 @@ namespace Estacionamiento
             );
             //Password por defecto en la precarca Password1!
             #endregion
-
+           // Para definir, donde lograr hacer un login de la cuenta ante un requerimiento de authenticación.
+             builder.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
+                 opciones =>
+                 {
+                     opciones.LoginPath = "/Account/IniciarSesion";
+                     opciones.AccessDeniedPath = "/Account/AccesoDenegado";
+                 });
 
             builder.AddControllersWithViews();
 

@@ -17,17 +17,14 @@ namespace Estacionamiento.Controllers
         {
         }
 
-        public IActionResult Index()
+        public IActionResult Index(String mensaje)
         {
-           // numero = 5555;
-            return View(model: "pepe");
-        }
-
-
-        public IActionResult Privacy()
-        {
+            ViewBag.Mensaje = mensaje;
             return View();
         }
+
+
+       
 
         public IActionResult MostrarNumeros(List<int> numeritos)
         {

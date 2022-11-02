@@ -81,8 +81,15 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - Estacionamiento - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - Estacionamiento -
+            @if (ViewBag.Mensaje == null)
+            {
+            <a asp-action="Seed" asp-controller="PreCarga" class="btn btn-sm btn-info">Pre Carga Db</a>
+            }
         </div>
+       @if ( User.IsInRole("Cliente")) {
+             <p>Es un Cliente</p>
+        }
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
