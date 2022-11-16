@@ -8,31 +8,54 @@
 
 <h4>Direccion</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Calle" class="control-label"></label>
-                <input asp-for="Calle" class="form-control" />
-                <span asp-validation-for="Calle" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Ciudad" class="control-label"></label>
-                <input asp-for="Ciudad" class="form-control" />
-                <span asp-validation-for="Ciudad" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="numero" class="control-label"></label>
-                <input asp-for="numero" class="form-control" />
-                <span asp-validation-for="numero" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+@if (ViewData["Id"] != null)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    @*Se ejemplifica unicamente, la diferencia para contemplar diferentes tipos elementos HTML, para una misma propiedad.*@
+                    @if (ViewData["ClienteId"] == null)
+                    {
+                        <select asp-for="Id" class="form-control" asp-items="ViewBag.Id"></select>
+                    }
+                    else
+                    {
+
+                        <input asp-for="Id" class="form-control" value="@ViewBag.ClienteId" readonly />
+                    }
+
+                </div>
+             
+                <div class="form-group">
+                    <label asp-for="Calle" class="control-label"></label>
+                    <input asp-for="Calle" class="form-control" />
+                    <span asp-validation-for="Calle" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Ciudad" class="control-label"></label>
+                    <input asp-for="Ciudad" class="form-control" />
+                    <span asp-validation-for="Ciudad" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="numero" class="control-label"></label>
+                    <input asp-for="numero" class="form-control" />
+                    <span asp-validation-for="numero" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+} else
+
+{
+    
+<h4 class="text-danger">No hay clientes disponibles para agregar una dirección</h4>
+}
 
 <div>
     <a asp-action="Index">Back to List</a>

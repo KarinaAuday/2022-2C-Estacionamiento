@@ -20,9 +20,11 @@ namespace Estacionamiento.Controllers
         }
 
         // GET: Direcciones
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View( _context.Direcciones.ToList());
+            var garageContext = _context.Direcciones.Include(d => d.Cliente);
+            return View(await garageContext.ToListAsync());
+            
         }
 
         // GET: Direcciones/Details/5
@@ -46,7 +48,8 @@ namespace Estacionamiento.Controllers
         // GET: Direcciones/Create
         public IActionResult Create()
         {
-
+            //incluyo el objeto direccion. Para cada uno de los clientes incluir la direccion si es que existe, y solo trae los que tiene nul
+            ViewData["Id"] = new SelectList(_context.Clientes.Include(c=>c.Direccion).Where(c=>c.Direccion==null), "Id", "Apellido");
             return View();
         }
 
@@ -63,6 +66,7 @@ namespace Estacionamiento.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Id"] = new SelectList(_context.Clientes, "Id", "Apellido",direccion.Id);
             return View(direccion);
         }
 
